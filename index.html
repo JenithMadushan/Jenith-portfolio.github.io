@@ -34,7 +34,7 @@
 
     <div id="loader">
 
-        <h1>JENITH</h1>
+        <h1>WELCOME</h1>
 
     </div>
 
@@ -55,7 +55,18 @@
         <div class="glow glow2"></div>
 
     </div>
+<script>
+window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
 
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+
+    setTimeout(() => {
+        loader.style.display = "none";
+    }, 600);
+});
+</script>
     <!-- Main Container -->
 
     <main>
