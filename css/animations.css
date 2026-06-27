@@ -1,0 +1,473 @@
+/* ==========================================
+   JENITH MADUSHAN PORTFOLIO
+   animations.css
+==========================================*/
+
+/* ==============================
+   FLOATING PROFILE
+==============================*/
+
+.profile{
+    animation: floatProfile 6s ease-in-out infinite;
+}
+
+@keyframes floatProfile{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-18px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+/* ==============================
+   BACKGROUND GLOW
+==============================*/
+
+.glow1{
+    animation: glowMoveOne 16s ease-in-out infinite alternate;
+}
+
+.glow2{
+    animation: glowMoveTwo 18s ease-in-out infinite alternate;
+}
+
+@keyframes glowMoveOne{
+
+    from{
+        transform:translate(0,0) scale(1);
+    }
+
+    to{
+        transform:translate(180px,120px) scale(1.25);
+    }
+
+}
+
+@keyframes glowMoveTwo{
+
+    from{
+        transform:translate(0,0) scale(1);
+    }
+
+    to{
+        transform:translate(-180px,-120px) scale(1.2);
+    }
+
+}
+
+/* ==============================
+   GRADIENT ANIMATION
+==============================*/
+
+.gradient{
+
+    background-size:300% 300%;
+
+    animation:gradientAnimation 18s ease infinite;
+
+}
+
+@keyframes gradientAnimation{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
+}
+
+/* ==============================
+   HERO FADE
+==============================*/
+
+.hero-left{
+    animation:heroLeft .9s ease forwards;
+}
+
+.hero-right{
+    animation:heroRight .9s ease forwards;
+}
+
+@keyframes heroLeft{
+
+    from{
+        opacity:0;
+        transform:translateX(-60px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+
+}
+
+@keyframes heroRight{
+
+    from{
+        opacity:0;
+        transform:translateX(60px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+
+}
+
+/* ==============================
+   SOCIAL BUTTONS
+==============================*/
+
+.socials a{
+
+    transition:
+        .35s ease,
+        box-shadow .35s ease,
+        transform .35s ease;
+
+}
+
+.socials a:hover{
+
+    transform:
+        translateY(-8px)
+        scale(1.12)
+        rotate(-4deg);
+
+}
+
+/* ==============================
+   CARD HOVER
+==============================*/
+
+.card{
+
+    transition:
+        transform .45s ease,
+        box-shadow .45s ease,
+        border-color .45s ease;
+
+}
+
+.card:hover{
+
+    transform:
+        perspective(1000px)
+        rotateX(5deg)
+        rotateY(-5deg)
+        translateY(-12px);
+
+}
+
+.card:hover::before{
+
+    animation:cardLight 1.2s linear;
+
+}
+
+@keyframes cardLight{
+
+    0%{
+
+        transform:
+        translateX(-150px)
+        rotate(45deg);
+
+        opacity:0;
+
+    }
+
+    50%{
+
+        opacity:.5;
+
+    }
+
+    100%{
+
+        transform:
+        translateX(550px)
+        rotate(45deg);
+
+        opacity:0;
+
+    }
+
+}
+
+/* ==============================
+   ICON FLOAT
+==============================*/
+
+.icon{
+
+    animation:iconFloat 4s ease-in-out infinite;
+
+}
+
+@keyframes iconFloat{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+/* ==============================
+   EXPLORE TEXT
+==============================*/
+
+.card span{
+
+    transition:.35s;
+
+}
+
+.card:hover span{
+
+    letter-spacing:2px;
+
+    transform:translateX(8px);
+
+}
+
+/* ==============================
+   LOADER
+==============================*/
+
+#loader h1{
+
+    animation:loaderPulse 1.4s infinite;
+
+}
+
+@keyframes loaderPulse{
+
+    0%{
+
+        opacity:.4;
+        transform:scale(.96);
+
+    }
+
+    50%{
+
+        opacity:1;
+        transform:scale(1.06);
+
+    }
+
+    100%{
+
+        opacity:.4;
+        transform:scale(.96);
+
+    }
+
+}
+
+/* ==============================
+   TYPING CURSOR
+==============================*/
+
+#typing-role{
+
+    position:relative;
+
+}
+
+#typing-role::after{
+
+    content:"";
+
+    width:2px;
+
+    height:100%;
+
+    background:#00d9ff;
+
+    position:absolute;
+
+    right:-6px;
+
+    top:0;
+
+    animation:blink .8s infinite;
+
+}
+
+@keyframes blink{
+
+    0%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:0;
+    }
+
+    100%{
+        opacity:1;
+    }
+
+}
+
+/* ==============================
+   SECTION REVEAL
+==============================*/
+
+.reveal{
+
+    opacity:0;
+
+    transform:translateY(80px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+
+}
+
+.reveal.active{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+/* ==============================
+   BUTTON GLOW
+==============================*/
+
+.card::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:28px;
+
+    opacity:0;
+
+    transition:.45s;
+
+    border:1px solid rgba(255,255,255,.15);
+
+}
+
+.card:hover::after{
+
+    opacity:1;
+
+}
+
+/* ==============================
+   HERO TEXT
+==============================*/
+
+.hero h1{
+
+    animation:titleReveal 1.1s ease;
+
+}
+
+@keyframes titleReveal{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==============================
+   PARALLAX FEEL
+==============================*/
+
+.hero{
+
+    animation:heroAppear 1.2s ease;
+
+}
+
+@keyframes heroAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.98);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==============================
+   SMOOTH IMAGE SHADOW
+==============================*/
+
+.profile{
+
+    transition:
+        transform .4s ease,
+        box-shadow .4s ease;
+
+}
+
+.profile:hover{
+
+    transform:
+        scale(1.03);
+
+    box-shadow:
+        0 0 60px rgba(0,217,255,.25),
+        0 0 120px rgba(0,217,255,.08);
+
+}
