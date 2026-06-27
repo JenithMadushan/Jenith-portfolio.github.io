@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Viewer</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: #181818;
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      z-index: 10;
+    }
+
+    a, button {
+      color: white;
+      background: #252525;
+      border: 1px solid #444;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto;
+      background: white;
+    }
+
+    .message {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 20px;
+      background: #202020;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="index.html">Back</a>
+    <strong id="pdfTitle">Portfolio PDF</strong>
+
+    <div>
+      <button id="prev">Prev</button>
+      <span><span id="pageNum">0</span>/<span id="pageTotal">0</span></span>
+      <button id="next">Next</button>
+      <button id="zoomOut">-</button>
+      <button id="zoomIn">+</button>
+      <a id="download" href="#" download>Download</a>
+    </div>
+  </header>
+
+  <div id="message" class="message">Loading PDF...</div>
+  <canvas id="pdfCanvas"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get("file");
+    const title = params.get("title") || "Portfolio PDF";
+
+    const canvas = document.getElementById("pdfCanvas");
+    const ctx = canvas.getContext("2d");
+    const message = document.getElementById("message");
+
+    document.getElementById("pdfTitle").textContent = title;
+    document.getElementById("download").href = file || "#";
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+    let pdfDoc = null;
+    let page = 1;
+    let scale = 1.3;
+
+    async function renderPage() {
+      const pdfPage = await pdfDoc.getPage(page);
+      const viewport = pdfPage.getViewport({ scale });
+
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      await pdfPage.render({
+        canvasContext: ctx,
+        viewport: viewport
+      }).promise;
+
+      message.style.display = "none";
+      canvas.style.display = "block";
+
+      document.getElementById("pageNum").textContent = page;
+      document.getElementById("pageTotal").textContent = pdfDoc.numPages;
+    }
+
+    async function loadPdf() {
+      if (!file) {
+        message.innerHTML = "No PDF selected.";
+        return;
+      }
+
+      try {
+        pdfDoc = await pdfjsLib.getDocument(file).promise;
+        renderPage();
+      } catch (error) {
+        message.innerHTML =
+          `<strong>${title} is not uploaded yet.</strong><br>` +
+          `Upload it here: <code>${file}</code>`;
+      }
+    }
+
+    document.getElementById("prev").onclick = () => {
+      if (pdfDoc && page > 1) {
+        page--;
+        renderPage();
+      }
+    };
+
+    document.getElementById("next").onclick = () => {
+      if (pdfDoc && page < pdfDoc.numPages) {
+        page++;
+        renderPage();
+      }
+    };
+
+    document.getElementById("zoomOut").onclick = () => {
+      if (pdfDoc) {
+        scale = Math.max(0.7, scale - 0.2);
+        renderPage();
+      }
+    };
+
+    document.getElementById("zoomIn").onclick = () => {
+      if (pdfDoc) {
+        scale = Math.min(2.5, scale + 0.2);
+        renderPage();
+      }
+    };
+
+    loadPdf();
+  </script>
+</body>
+</html>
